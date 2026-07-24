@@ -9,7 +9,7 @@ namespace PontoVenda.Backend.Modules.Balcao.Service;
 public class BalcaoService
 {
     private readonly SharedDbContext _web;
-    private readonly AppDbContext    _pdv;
+    private readonly AppDbContext _pdv;
 
     // --- SENHA INICIAL PADRAO PARA NOVAS CONTAS DE CLIENTE ---
     private const string SenhaInicialPadrao = "Cliente@123";
@@ -27,12 +27,12 @@ public class BalcaoService
             .OrderBy(e => e.DataEvento)
             .Select(e => new EventoBalcaoDto
             {
-                Id = e.Id,
-                Titulo = e.Titulo,
-                Categoria = e.Categoria,
-                Local = e.Local,
-                DataEvento = e.DataEvento,
-                ImagemUrl = e.ImagemUrl
+                Id          = e.Id,
+                Titulo      = e.Titulo,
+                Categoria   = e.Categoria,
+                Local       = e.Local,
+                DataEvento  = e.DataEvento,
+                ImagemUrl   = e.ImagemUrl
             })
             .ToListAsync(cancellationToken);
     }
@@ -45,10 +45,10 @@ public class BalcaoService
             .OrderBy(i => i.Preco)
             .Select(i => new IngressoBalcaoDto
             {
-                Id = i.Id,
-                Setor = i.Setor,
-                Preco = i.Preco,
-                QuantidadeDisponivel = i.QuantidadeDisponivel
+                Id                      = i.Id,
+                Setor                   = i.Setor,
+                Preco                   = i.Preco,
+                QuantidadeDisponivel    = i.QuantidadeDisponivel
             })
             .ToListAsync(cancellationToken);
     }
@@ -130,15 +130,22 @@ public class BalcaoService
         {
             cliente = new ClienteWeb
             {
-                Nome = dto.Cliente.Nome.Trim(),
-                Sobrenome = dto.Cliente.Sobrenome.Trim(),
-                Email = emailNormalizado,
-                Cpf = dto.Cliente.Cpf.Trim(),
-                Telefone = dto.Cliente.Telefone.Trim(),
-                SenhaHash = BCrypt.Net.BCrypt.HashPassword(SenhaInicialPadrao),
-                Role = "CLIENTE",
-                DataCadastro = DateTime.UtcNow,
-                DataNascimento = dto.Cliente.DataNascimento ?? DateTime.UtcNow
+                Nome 			= dto.Cliente.Nome.Trim(),
+                Sobrenome 		= dto.Cliente.Sobrenome.Trim(),
+                Email 			= emailNormalizado,
+                Cpf 			= dto.Cliente.Cpf.Trim(),
+                Telefone 		= dto.Cliente.Telefone.Trim(),
+                Cep 			= (dto.Cliente.Cep ?? string.Empty).Trim(),
+                Logradouro 		= (dto.Cliente.Logradouro ?? string.Empty).Trim(),
+                Numero			= (dto.Cliente.Numero ?? string.Empty).Trim(),
+                Complemento 	= string.IsNullOrWhiteSpace(dto.Cliente.Complemento) ? null : dto.Cliente.Complemento.Trim(),
+                Bairro 			= (dto.Cliente.Bairro ?? string.Empty).Trim(),
+                Cidade 			= (dto.Cliente.Cidade ?? string.Empty).Trim(),
+                Estado 			= (dto.Cliente.Estado ?? string.Empty).Trim().ToUpperInvariant(),
+                SenhaHash 		= BCrypt.Net.BCrypt.HashPassword(SenhaInicialPadrao),
+                Role 			= "CLIENTE",
+                DataCadastro 	= DateTime.UtcNow,
+                DataNascimento 	= dto.Cliente.DataNascimento ?? DateTime.UtcNow
             };
             _web.Clientes.Add(cliente);
             await _web.SaveChangesAsync(cancellationToken);
@@ -158,17 +165,35 @@ public class BalcaoService
 
         var pedido = new PedidoWeb
         {
-            UsuarioId = cliente.Id,
-            ValorTotal = valorTotal,
-            Status = "PAGO",
-            DataCriacao = DateTime.UtcNow,
+            UsuarioId 				= cliente.Id,
+            CompradorNome           = $"{cliente.Nome} {cliente.Sobrenome}".Trim(),
+            CompradorCpf            = cliente.Cpf,
+            CompradorEmail          = cliente.Email,
+            CompradorTelefone       = cliente.Telefone,
+            CompradorDataNascimento = (dto.Cliente.DataNascimento ?? DateTime.UtcNow).ToString("yyyy-MM-dd"),
+            EnderecoCep             = cliente.Cep,
+            EnderecoLogradouro      = cliente.Logradouro,
+            EnderecoNumero          = cliente.Numero,
+            EnderecoComplemento     = cliente.Complemento,
+            EnderecoBairro          = cliente.Bairro,
+            EnderecoCidade          = cliente.Cidade,
+            EnderecoEstado          = cliente.Estado,
+            ValorTotal 				= valorTotal,
+            Status 					= "PAGO",
+            CheckinToken 			= "CHK-" + Guid.NewGuid().ToString("N"),
+            DataCriacao 			= DateTime.UtcNow,
             Itens =
             {
                 new ItemPedidoWeb
                 {
-                    IngressoId = ingresso.Id,
-                    Quantidade = dto.Quantidade,
-                    PrecoUnitario = precoUnitario
+                    IngressoId    = ingresso.Id,
+                    Quantidade    = dto.Quantidade,
+                    PrecoUnitario = precoUnitario,
+                    Modalidade    = tipoEntrada == "INTEIRA" ? "INTEIRA" : "MEIA",
+                    Subtipo       = string.IsNullOrEmpty(subtipo) ? null : subtipo,
+                    DocumentosJson = (tipoEntrada == "MEIA" && dto.Cliente.Documentos is { Count: > 0 })
+                        ? System.Text.Json.JsonSerializer.Serialize(dto.Cliente.Documentos)
+                        : null
                 }
             }
         };
@@ -190,35 +215,35 @@ public class BalcaoService
 
         _pdv.VendasBalcao.Add(new VendaBalcao
         {
-            OperadorId = operadorId,
-            OperadorNome = operadorNome,
-            ClienteWebId = cliente.Id,
-            ClienteNome = cliente.Nome,
-            ClienteSobrenome = cliente.Sobrenome,
-            ClienteEmail = cliente.Email,
-            ClienteCpf = cliente.Cpf,
-            ClienteTelefone = cliente.Telefone,
-            ClienteDataNascimento = dto.Cliente.DataNascimento,
-            Cep = dto.Cliente.Cep,
-            Logradouro = dto.Cliente.Logradouro,
-            Numero = dto.Cliente.Numero,
-            Complemento = dto.Cliente.Complemento,
-            Bairro = dto.Cliente.Bairro,
-            Cidade = dto.Cliente.Cidade,
-            Estado = dto.Cliente.Estado,
-            PedidoWebId = pedido.Id,
-            EventoId = evento.Id,
-            EventoTitulo = evento.Titulo,
-            IngressoId = ingresso.Id,
-            Setor = ingresso.Setor,
-            TipoEntrada = tipoEntrada,
-            FormaPagamento = formaPagamento,
-            Quantidade = dto.Quantidade,
-            ValorUnitario = precoUnitario,
-            ValorTotal = valorTotal,
-            CodigoTicket = codigoTicket,
-            DataVenda = DateTime.UtcNow,
-            AcompanhantesJson = acompanhantes.Count > 0
+            OperadorId 				= operadorId,
+            OperadorNome 			= operadorNome,
+            ClienteWebId 			= cliente.Id,
+            ClienteNome 			= cliente.Nome,
+            ClienteSobrenome 		= cliente.Sobrenome,
+            ClienteEmail 			= cliente.Email,
+            ClienteCpf 				= cliente.Cpf,
+            ClienteTelefone 		= cliente.Telefone,
+            ClienteDataNascimento 	= dto.Cliente.DataNascimento,
+            Cep 					= dto.Cliente.Cep,
+            Logradouro 				= dto.Cliente.Logradouro,
+            Numero 					= dto.Cliente.Numero,
+            Complemento 			= dto.Cliente.Complemento,
+            Bairro 					= dto.Cliente.Bairro,
+            Cidade 					= dto.Cliente.Cidade,
+            Estado 					= dto.Cliente.Estado,
+            PedidoWebId 			= pedido.Id,
+            EventoId 				= evento.Id,
+            EventoTitulo 			= evento.Titulo,
+            IngressoId 				= ingresso.Id,
+            Setor 					= ingresso.Setor,
+            TipoEntrada 			= tipoEntrada,
+            FormaPagamento 			= formaPagamento,
+            Quantidade 				= dto.Quantidade,
+            ValorUnitario 			= precoUnitario,
+            ValorTotal 				= valorTotal,
+            CodigoTicket 			= codigoTicket,
+            DataVenda 				= DateTime.UtcNow,
+            AcompanhantesJson 		= acompanhantes.Count > 0
                 ? System.Text.Json.JsonSerializer.Serialize(acompanhantes)
                 : null,
             Subtipo = string.IsNullOrEmpty(subtipo) ? null : subtipo,
@@ -231,22 +256,22 @@ public class BalcaoService
         // --- MONTA A RESPOSTA ---
         return new VendaBalcaoRespostaDto
         {
-            CodigoTicket = codigoTicket,
-            PedidoId = pedido.Id,
-            ClienteNome = $"{cliente.Nome} {cliente.Sobrenome}".Trim(),
-            ClienteEmail = cliente.Email,
-            EventoTitulo = evento.Titulo,
-            EventoLocal = evento.Local,
-            EventoData = evento.DataEvento,
-            Setor = ingresso.Setor,
-            TipoEntrada = tipoEntrada,
-            Quantidade = dto.Quantidade,
-            ValorTotal = valorTotal,
-            DataVenda = DateTime.UtcNow,
-            QrCodeBase64 = pedido.QrCodeBase64,
-            ContaCriada = contaCriada,
-            SenhaInicial = contaCriada ? SenhaInicialPadrao : null,
-            FormaPagamento = formaPagamento
+            CodigoTicket 	= codigoTicket,
+            PedidoId 		= pedido.Id,
+            ClienteNome 	= $"{cliente.Nome} {cliente.Sobrenome}".Trim(),
+            ClienteEmail 	= cliente.Email,
+            EventoTitulo 	= evento.Titulo,
+            EventoLocal 	= evento.Local,
+            EventoData 		= evento.DataEvento,
+            Setor 			= ingresso.Setor,
+            TipoEntrada 	= tipoEntrada,
+            Quantidade 		= dto.Quantidade,
+            ValorTotal 		= valorTotal,
+            DataVenda 		= DateTime.UtcNow,
+            QrCodeBase64 	= pedido.QrCodeBase64,
+            ContaCriada 	= contaCriada,
+            SenhaInicial 	= contaCriada ? SenhaInicialPadrao : null,
+            FormaPagamento 	= formaPagamento
         };
     }
 
@@ -257,17 +282,17 @@ public class BalcaoService
             .OrderByDescending(v => v.DataVenda)
             .Select(v => new VendaRelatorioBalcaoDto
             {
-                Id = v.Id,
-                CodigoTicket = v.CodigoTicket,
-                DataVenda = v.DataVenda,
-                EventoNome = v.EventoTitulo,
-                Setor = v.Setor,
-                TipoEntrada = v.TipoEntrada,
-                Quantidade = v.Quantidade,
-                OperadorNome = v.OperadorNome,
-                ClienteNome = (v.ClienteNome + " " + v.ClienteSobrenome).Trim(),
+                Id 				= v.Id,
+                CodigoTicket 	= v.CodigoTicket,
+                DataVenda 		= v.DataVenda,
+                EventoNome 		= v.EventoTitulo,
+                Setor 			= v.Setor,
+                TipoEntrada 	= v.TipoEntrada,
+                Quantidade 		= v.Quantidade,
+                OperadorNome 	= v.OperadorNome,
+                ClienteNome 	= (v.ClienteNome + " " + v.ClienteSobrenome).Trim(),
                 MetodoPagamento = v.FormaPagamento,
-                Valor = v.ValorTotal
+                Valor 			= v.ValorTotal
             })
             .ToListAsync(cancellationToken);
     }

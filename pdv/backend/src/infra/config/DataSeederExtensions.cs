@@ -13,6 +13,7 @@ public static class DataSeederExtensions
     {
         using var scope = app.Services.CreateScope();
         var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+        await NormalizarSchemaLegadoAsync(context);
         await EnsureTablesCreatedAsync(context);
         await GarantirColunaAtivoAsync(context);
         await GarantirTabelaVendasBalcaoAsync(context);
@@ -113,15 +114,60 @@ public static class DataSeederExtensions
     private static async Task EnsureTablesCreatedAsync(AppDbContext context)
     {
         var creator = context.GetService<IRelationalDatabaseCreator>();
-
         if (!await creator.ExistsAsync())
         {
             await creator.CreateAsync();
         }
 
+        // --- GERA O SCRIPT DE CRIACAO A PARTIR DO MODELO DO EF ---
+        var script  = context.Database.GenerateCreateScript();
+        var batches = script.Split(
+            new[] { "\r\nGO\r\n", "\nGO\n", "\r\nGO", "\nGO" },
+            StringSplitOptions.RemoveEmptyEntries);
+
+        foreach (var batch in batches)
+        {
+            var comando = batch.Trim();
+            if (string.IsNullOrEmpty(comando))
+            {
+                continue;
+            }
+
+            try
+            {
+                await context.Database.ExecuteSqlRawAsync(comando);
+            }
+            catch (SqlException ex) when (
+                ex.Number == 2714 || 
+                ex.Number == 1913 || 
+                ex.Number == 2717 || 
+                ex.Number == 4712 || 
+                ex.Number == 1919
+            )   
+            {
+                // --- IGNORA ITENS JA CRIADOS OU INCOMPATIVEIS COM SCHEMA LEGADO ---
+            }
+        }
+    }
+
+    // --- AJUSTA COLUNAS LEGADAS QUE IMPEDEM A CRIACAO DE INDICES DO SCHEMA NOVO ---
+    private static async Task NormalizarSchemaLegadoAsync(AppDbContext context)
+    {
         try
         {
-            await creator.CreateTablesAsync();
+            await context.Database.ExecuteSqlRawAsync(@"
+IF OBJECT_ID('Operadores', 'U') IS NOT NULL
+    AND COL_LENGTH('Operadores', 'Login') IS NOT NULL
+    AND EXISTS (
+        SELECT 1 FROM sys.columns c
+        JOIN sys.types t ON t.user_type_id = c.user_type_id
+        WHERE c.object_id = OBJECT_ID('Operadores')
+            AND c.name = 'Login'
+            AND (c.max_length = -1 OR c.max_length > 900)
+    )
+BEGIN
+    ALTER TABLE Operadores ALTER COLUMN Login nvarchar(450) NOT NULL;
+END;");
         }
         catch (SqlException)
         {}

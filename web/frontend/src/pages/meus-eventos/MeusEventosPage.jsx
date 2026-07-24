@@ -1,6 +1,7 @@
 import { useEffect, useState }  from "react";
 import { pedidoService }        from "../../services/pedidoService";
 import { eventoService }        from "../../services/eventoService";
+import SelectCustom             from "../../components/SelectCustom";
 import "../../styles/meus-eventos.css";
 
 // --- LISTA DE MOTIVOS PADRONIZADOS PARA SOLICITACAO DE REEMBOLSO ---
@@ -579,18 +580,14 @@ export default function MeusEventosPage() {
                       Motivo padronizado
                     </label>
 
-                    <select
-                      id="motivo-padrao"
-                      className="meus-eventos-page__refund-select"
+                    <SelectCustom
                       value={motivoCodigo}
-                      onChange={(e) => setMotivoCodigo(e.target.value)}
-                    >
-                      {MOTIVOS_REEMBOLSO.map((motivo) => (
-                        <option key={motivo.codigo} value={motivo.codigo}>
-                          {motivo.rotulo}
-                        </option>
-                      ))}
-                    </select>
+                      onChange={(valor) => setMotivoCodigo(valor)}
+                      options={MOTIVOS_REEMBOLSO.map((motivo) => ({
+                        value: motivo.codigo,
+                        label: motivo.rotulo
+                      }))}
+                    />
 
                     <label htmlFor="motivo-detalhe" className="meus-eventos-page__refund-label">
                       Detalhamento {motivoCodigo === "OUTRO" ? "(obrigatório)" : "(opcional)"}

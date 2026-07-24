@@ -907,19 +907,19 @@
         }
 
         const cliente = {
-            nome: form.elements["nome"].value.trim(),
-            sobrenome: form.elements["sobrenome"].value.trim(),
-            email: form.elements["email"].value.trim(),
-            cpf: form.elements["cpf"].value.trim(),
-            telefone: form.elements["telefone"].value.trim(),
+            nome:           form.elements["nome"].value.trim(),
+            sobrenome:      form.elements["sobrenome"].value.trim(),
+            email:          form.elements["email"].value.trim(),
+            cpf:            form.elements["cpf"].value.trim(),
+            telefone:       form.elements["telefone"].value.trim(),
             dataNascimento: form.elements["dataNascimento"].value || null,
-            cep: form.elements["cep"].value.trim() || null,
-            logradouro: form.elements["logradouro"].value.trim() || null,
-            numero: form.elements["numero"].value.trim() || null,
-            complemento: form.elements["complemento"].value.trim() || null,
-            bairro: form.elements["bairro"].value.trim() || null,
-            cidade: form.elements["cidade"].value.trim() || null,
-            estado: form.elements["estado"].value.trim() || null
+            cep:            form.elements["cep"].value.trim() || null,
+            logradouro:     form.elements["logradouro"].value.trim() || null,
+            numero:         form.elements["numero"].value.trim() || null,
+            complemento:     form.elements["complemento"].value.trim() || null,
+            bairro:         form.elements["bairro"].value.trim() || null,
+            cidade:         form.elements["cidade"].value.trim() || null,
+            estado:         form.elements["estado"].value.trim() || null
         };
 
         if (!cliente.nome || !cliente.sobrenome || !cliente.email || !cliente.cpf || !cliente.telefone) {
@@ -934,7 +934,7 @@
                 return exibirFeedback("erro", "Selecione o tipo de meia entrada.");
             }
             
-            cliente.documentos = coletarDocsComprador();
+            cliente.documentos = coletarDocumentosComprador();
             const erroComprador = validarPessoaDoc(subtipo, cliente.documentos, cliente.dataNascimento, "Ingresso 1");
             if (erroComprador) {
                 return exibirFeedback("erro", erroComprador);
