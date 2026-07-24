@@ -1,5 +1,7 @@
+import { useState }              from "react";
 import { Link, useNavigate }    from "react-router-dom";
 import { useCarrinho }          from "../../context/CarrinhoContext";
+import ModalConfirmarRemocao    from "../../components/ModalConfirmarRemocao";
 import "../../styles/carrinho.css";
 
 function formatarMoeda(valor) {
@@ -10,6 +12,7 @@ function formatarMoeda(valor) {
 export default function CarrinhoPage() {
     const navigate = useNavigate();
     const { itens, total, atualizarQuantidade, remover, chaveDe } = useCarrinho();
+    const [itemParaRemover, setItemParaRemover] = useState(null);
 
     const logado = !!localStorage.getItem("token");
 
@@ -20,6 +23,24 @@ export default function CarrinhoPage() {
             return;
         }
         navigate("/pedido/checkout");
+    }
+
+    // --- ABRE O MODAL DE CONFIRMACAO PARA O ITEM SELECIONADO ---
+    function pedirConfirmacaoRemocao(item) {
+        setItemParaRemover(item);
+    }
+
+    // --- FECHA O MODAL SEM REMOVER ---
+    function cancelarRemocao() {
+        setItemParaRemover(null);
+    }
+
+    // --- REMOVE DE FATO O ITEM E FECHA O MODAL ---
+    function confirmarRemocao() {
+        if (itemParaRemover) {
+            remover(chaveDe(itemParaRemover));
+        }
+        setItemParaRemover(null);
     }
 
     // --- CONVIDA O CLIENTE A EXPLORAR EVENTOS ---
@@ -78,7 +99,13 @@ export default function CarrinhoPage() {
                                 <div className="carrinho-item__valores">
                                     <span className="carrinho-item__preco">{formatarMoeda(item.precoUnitario * item.quantidade)}</span>
                                     <span className="carrinho-item__unit">{formatarMoeda(item.precoUnitario)} un.</span>
-                                    <button className="carrinho-item__remover" onClick={() => remover(chave)}>Remover</button>
+                                    {/* --- REMOVER ABRE O MODAL DE CONFIRMACAO --- */}
+                                    <button
+                                        className="carrinho-item__remover"
+                                        onClick={() => pedirConfirmacaoRemocao(item)}
+                                    >
+                                        Remover
+                                    </button>
                                 </div>
                             </div>
                         );
@@ -98,6 +125,14 @@ export default function CarrinhoPage() {
                         <strong>{formatarMoeda(total)}</strong>
                     </div>
                     
+
+            {/* --- MODAL DE CONFIRMACAO DE REMOCAO DO ITEM DO CARRINHO --- */}
+            <ModalConfirmarRemocao
+                aberto={itemParaRemover !== null}
+                item={itemParaRemover}
+                onConfirmar={confirmarRemocao}
+                onCancelar={cancelarRemocao}
+            />
                     <button className="carrinho-resumo__btn" onClick={finalizar}>
                         {logado ? "Finalizar compra" : "Entrar para finalizar"}
                     </button>

@@ -114,6 +114,19 @@ export const pedidoService = {
         });
     },
 
+    // --- TRANSFERE O INGRESSO PARA OUTRO USUARIO IDENTIFICADO POR EMAIL + CPF ---
+    transferirIngresso(pedidoId, payload = {}) {
+        const body = {
+            emailDestinatario: (payload.emailDestinatario || "").trim(),
+            cpfDestinatario:   (payload.cpfDestinatario   || "").trim()
+        };
+
+        return apiRequest(`/pedido/${pedidoId}/transferir`, {
+            method: "POST",
+            body: JSON.stringify(body)
+        });
+    },
+
     // --- OBTEM O RELATORIO DE VENDAS DO MODULO ADMIN ---
     relatorioVendas() {
         return apiRequest("/admin/relatorio/vendas");

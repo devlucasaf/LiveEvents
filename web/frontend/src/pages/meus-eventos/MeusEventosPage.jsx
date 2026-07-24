@@ -2,6 +2,7 @@ import { useEffect, useState }  from "react";
 import { pedidoService }        from "../../services/pedidoService";
 import { eventoService }        from "../../services/eventoService";
 import SelectCustom             from "../../components/SelectCustom";
+import ModalTransferirIngresso  from "../../components/ModalTransferirIngresso";
 import "../../styles/meus-eventos.css";
 
 // --- LISTA DE MOTIVOS PADRONIZADOS PARA SOLICITACAO DE REEMBOLSO ---
@@ -43,6 +44,12 @@ export default function MeusEventosPage() {
   const [copiado,                       setCopiado]                       = useState("");
   const [motivoCodigo,                  setMotivoCodigo]                  = useState("ARREPENDIMENTO_7_DIAS");
   const [motivoDetalhe,                 setMotivoDetalhe]                 = useState("");
+
+  // --- ESTADO DO MODAL DE TRANSFERENCIA DE INGRESSO ---
+  const [transferenciaAberta,           setTransferenciaAberta]           = useState(false);
+  const [processandoTransferencia,      setProcessandoTransferencia]      = useState(false);
+  const [erroTransferencia,             setErroTransferencia]             = useState("");
+  const [sucessoTransferencia,          setSucessoTransferencia]          = useState("");
 
   // --- CARREGA PEDIDOS DO USUARIO E CATALOGO DE EVENTOS ---
   useEffect(() => {
@@ -354,6 +361,62 @@ export default function MeusEventosPage() {
     }
   }
 
+  // --- INDICA SE UM PEDIDO PODE SER TRANSFERIDO A OUTRO USUARIO ---
+  function podeTransferir(item) {
+    if (!item) {
+      return false;
+    }
+
+    // --- SO PAGO, SEM REEMBOLSO EM ANDAMENTO E ANTES DO CHECKIN ---
+    return item.status === "PAGO"
+      && !item.reembolsoSolicitadoEm
+      && !(item.checkinUsosRealizados > 0);
+  }
+
+  // --- ABRE O MODAL DE TRANSFERENCIA PARA O INGRESSO SELECIONADO ---
+  function abrirTransferencia() {
+    setErroTransferencia("");
+    setSucessoTransferencia("");
+    setTransferenciaAberta(true);
+  }
+
+  // --- FECHA O MODAL DE TRANSFERENCIA (LIMPANDO FEEDBACKS) ---
+  function fecharTransferencia() {
+    setTransferenciaAberta(false);
+    setErroTransferencia("");
+    setSucessoTransferencia("");
+  }
+
+  // --- CONFIRMA A TRANSFERENCIA CHAMANDO A API E ATUALIZANDO ESTADO LOCAL ---
+  async function confirmarTransferencia({ emailDestinatario, cpfDestinatario }) {
+    if (!ingressoSelecionado) {
+      return;
+    }
+
+    setErroTransferencia("");
+    setSucessoTransferencia("");
+    setProcessandoTransferencia(true);
+
+    try {
+      // --- CHAMA O ENDPOINT DE TRANSFERENCIA ---
+      const resposta = await pedidoService.transferirIngresso(ingressoSelecionado.id, {
+        emailDestinatario,
+        cpfDestinatario
+      });
+
+      // --- REMOVE O PEDIDO DA LISTA LOCAL: ELE NAO PERTENCE MAIS AO USUARIO LOGADO ---
+      setPedidos((prev) => prev.filter((pedido) => pedido.id !== ingressoSelecionado.id));
+
+      setSucessoTransferencia(
+        resposta.mensagem || `Ingresso transferido para ${resposta.novoUsuarioEmail}.`
+      );
+    } catch (e) {
+      setErroTransferencia(e.message);
+    } finally {
+      setProcessandoTransferencia(false);
+    }
+  }
+
   // --- RENDERIZA A PÁGINA COM LISTA DE INGRESSOS, DETALHES E AÇÕES ---
   return (
     <section className="meus-eventos-page">
@@ -478,6 +541,16 @@ export default function MeusEventosPage() {
                     {processandoDownloadId === ingressoSelecionado.id
                       ? "Gerando PDF..."
                       : "Baixar ingresso (PDF)"}
+                  </button>
+
+                  {/* --- ACAO DE TRANSFERIR O INGRESSO POR EMAIL + CPF --- */}
+                  <button
+                    type="button"
+                    className="meus-eventos-page__transfer-btn"
+                    disabled={!podeTransferir(ingressoSelecionado)}
+                    onClick={abrirTransferencia}
+                  >
+                    Transferir ingresso
                   </button>
                 </div>
 
@@ -656,6 +729,17 @@ export default function MeusEventosPage() {
           )}
         </div>
       )}
+
+      {/* --- MODAL DE TRANSFERENCIA DE INGRESSO --- */}
+      <ModalTransferirIngresso
+        aberto={transferenciaAberta}
+        pedido={ingressoSelecionado}
+        processando={processandoTransferencia}
+        erro={erroTransferencia}
+        sucesso={sucessoTransferencia}
+        onConfirmar={confirmarTransferencia}
+        onFechar={fecharTransferencia}
+      />
     </section>
   );
 }

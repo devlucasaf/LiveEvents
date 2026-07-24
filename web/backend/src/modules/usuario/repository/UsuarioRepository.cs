@@ -33,6 +33,14 @@ public class UsuarioRepository : IUsuarioRepository
         return _context.Usuarios.FirstOrDefaultAsync(u => u.Email == email, cancellationToken);
     }
 
+    // --- BUSCAR USUARIO POR EMAIL + CPF ---
+    public Task<UsuarioEntity?> BuscarPorEmailECpfAsync(string email, string cpf, CancellationToken cancellationToken = default)
+    {
+        return _context.Usuarios.FirstOrDefaultAsync(
+            u => u.Email == email && u.Cpf == cpf,
+            cancellationToken);
+    }
+
     // --- BUSCAR USUÁRIO POR ID ---
     public Task<UsuarioEntity?> BuscarPorIdAsync(int id, CancellationToken cancellationToken = default)
     {

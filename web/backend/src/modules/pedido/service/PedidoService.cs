@@ -9,6 +9,7 @@ public class PedidoService
     private readonly ReembolsoService _reembolso;
     private readonly IngressoPdfService _ingressoPdf;
     private readonly IngressoCompartilhamentoService _compartilhamento;
+    private readonly IngressoTransferenciaService _transferencia;
     private readonly CheckinService _checkin;
 
     public PedidoService(
@@ -17,6 +18,7 @@ public class PedidoService
         ReembolsoService reembolso,
         IngressoPdfService ingressoPdf,
         IngressoCompartilhamentoService compartilhamento,
+        IngressoTransferenciaService transferencia,
         CheckinService checkin)
     {
         _criacao          = criacao;
@@ -24,6 +26,7 @@ public class PedidoService
         _reembolso        = reembolso;
         _ingressoPdf      = ingressoPdf;
         _compartilhamento = compartilhamento;
+        _transferencia    = transferencia;
         _checkin          = checkin;
     }
 
@@ -64,6 +67,14 @@ public class PedidoService
         int pedidoId,
         CancellationToken cancellationToken = default)
         => _compartilhamento.RevogarAsync(usuarioId, pedidoId, cancellationToken);
+
+    // --- TRANSFERIR INGRESSO PARA OUTRO USUARIO (EMAIL + CPF) ---
+    public Task<TransferirIngressoRespostaDto> TransferirIngressoAsync(
+        int usuarioId,
+        int pedidoId,
+        TransferirIngressoDto dto,
+        CancellationToken cancellationToken = default)
+        => _transferencia.TransferirAsync(usuarioId, pedidoId, dto, cancellationToken);
 
     // --- PDF DO INGRESSO PARA O DONO ---
     public Task<(byte[] arquivo, string nomeArquivo)> GerarIngressoPdfAsync(

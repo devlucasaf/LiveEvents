@@ -69,6 +69,7 @@ builder.Services.AddScoped<PedidoConsultaService>();
 builder.Services.AddScoped<ReembolsoService>();
 builder.Services.AddScoped<IngressoPdfService>();
 builder.Services.AddScoped<IngressoCompartilhamentoService>();
+builder.Services.AddScoped<IngressoTransferenciaService>();
 builder.Services.AddScoped<CheckinService>();
 builder.Services.AddScoped<PedidoService>();
 

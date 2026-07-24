@@ -120,6 +120,23 @@ public class PedidoController : ControllerBase
         return Ok(resposta);
     }
 
+    // --- TRANSFERIR INGRESSO PARA OUTRO USUARIO IDENTIFICADO POR EMAIL + CPF ---
+    [HttpPost("{pedidoId:int}/transferir")]
+    public async Task<IActionResult> TransferirIngresso(
+        [FromServices] CurrentUserService currentUser,
+        [FromRoute] int pedidoId,
+        [FromBody] TransferirIngressoDto dto,
+        CancellationToken cancellationToken)
+    {
+        var resposta = await _service.TransferirIngressoAsync(
+            currentUser.GetUserId(),
+            pedidoId,
+            dto,
+            cancellationToken);
+
+        return Ok(resposta);
+    }
+
     // --- DOWNLOAD PUBLICO COM TOKEN TEMPORARIO E LIMITE DE ACESSOS ---
     [AllowAnonymous]
     [HttpGet("compartilhado/{token}/pdf")]

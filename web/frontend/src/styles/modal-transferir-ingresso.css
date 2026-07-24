@@ -1,0 +1,237 @@
+/* --- FUNDO ESCURO QUE COBRE A TELA --- */
+.modal-transferir__overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    background: rgba(0, 0, 0, 0.55);
+    animation: modal-transferir-fade 0.18s ease;
+}
+
+@keyframes modal-transferir-fade {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+/* --- CAIXA CENTRAL DO MODAL --- */
+.modal-transferir {
+    width: 100%;
+    max-width: 460px;
+    max-height: calc(100vh - 2rem);
+    overflow-y: auto;
+    padding: 1.75rem 1.75rem 1.4rem;
+    background: var(--panel);
+    border: 1.5px solid var(--line);
+    border-radius: var(--radius-lg, 16px);
+    box-shadow: var(--shadow-md);
+    text-align: center;
+    animation: modal-transferir-subir 0.2s ease;
+}
+
+@keyframes modal-transferir-subir {
+    from {
+        opacity: 0;
+        transform: translateY(12px) scale(0.98);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* --- ICONE DE TRANSFERENCIA (SETAS EM CIRCULO) --- */
+.modal-transferir__icone {
+    width: 56px;
+    height: 56px;
+    margin: 0 auto 0.85rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: rgba(40, 100, 220, 0.14);
+    color: #2c6cd6;
+}
+
+.modal-transferir__icone svg {
+    width: 28px;
+    height: 28px;
+}
+
+/* --- TITULO --- */
+.modal-transferir__titulo {
+    margin: 0 0 0.45rem;
+    font-size: 1.2rem;
+    color: var(--ink);
+}
+
+/* --- MENSAGEM PRINCIPAL --- */
+.modal-transferir__mensagem {
+    margin: 0 0 1rem;
+    font-size: 0.9rem;
+    color: var(--muted);
+    line-height: 1.45;
+}
+
+/* --- RESUMO DO PEDIDO/INGRESSO --- */
+.modal-transferir__resumo {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    padding: 0.75rem 1rem;
+    margin: 0 0 1.1rem;
+    background: var(--bg-secondary);
+    border: 1px solid var(--line-light);
+    border-radius: var(--radius-md, 12px);
+    text-align: left;
+}
+
+.modal-transferir__evento {
+    color: var(--ink);
+    font-size: 0.95rem;
+}
+
+.modal-transferir__detalhe {
+    color: var(--muted);
+    font-size: 0.82rem;
+}
+
+/* --- FORMULARIO --- */
+.modal-transferir__form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
+    text-align: left;
+}
+
+.modal-transferir__label {
+    font-size: 0.82rem;
+    color: var(--ink);
+    font-weight: 600;
+    margin-top: 0.3rem;
+}
+
+.modal-transferir__input {
+    width: 100%;
+    padding: 0.7rem 0.85rem;
+    background: var(--panel);
+    border: 1.5px solid var(--line);
+    border-radius: var(--radius-md, 10px);
+    color: var(--ink);
+    font-family: inherit;
+    font-size: 0.92rem;
+    transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.modal-transferir__input:focus {
+    outline: none;
+    border-color: var(--brand);
+    box-shadow: 0 0 0 3px rgba(255, 92, 0, 0.15);
+}
+
+.modal-transferir__input:disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
+}
+
+/* --- MENSAGENS DE FEEDBACK --- */
+.modal-transferir__erro {
+    margin: 0.35rem 0 0;
+    padding: 0.55rem 0.75rem;
+    font-size: 0.85rem;
+    color: #b21e2b;
+    background: rgba(220, 53, 69, 0.1);
+    border: 1px solid rgba(220, 53, 69, 0.3);
+    border-radius: var(--radius-md, 10px);
+}
+
+.modal-transferir__sucesso {
+    margin: 0.35rem 0 0;
+    padding: 0.55rem 0.75rem;
+    font-size: 0.85rem;
+    color: #1e6c33;
+    background: rgba(40, 167, 69, 0.12);
+    border: 1px solid rgba(40, 167, 69, 0.3);
+    border-radius: var(--radius-md, 10px);
+}
+
+/* --- LISTA DE AVISOS --- */
+.modal-transferir__avisos {
+    margin: 0.9rem 0 0.4rem;
+    padding-left: 1.1rem;
+    font-size: 0.78rem;
+    color: var(--muted);
+    line-height: 1.5;
+}
+
+.modal-transferir__avisos li {
+    margin-bottom: 0.2rem;
+}
+
+/* --- ACOES --- */
+.modal-transferir__acoes {
+    display: flex;
+    gap: 0.6rem;
+    margin-top: 0.9rem;
+}
+
+.modal-transferir__btn {
+    flex: 1;
+    padding: 0.78rem 1rem;
+    border-radius: var(--radius-md);
+    font-size: 0.9rem;
+    font-weight: 600;
+    font-family: inherit;
+    cursor: pointer;
+    transition: background 0.15s, border-color 0.15s, opacity 0.15s, transform 0.1s;
+}
+
+.modal-transferir__btn:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+}
+
+.modal-transferir__btn:not(:disabled):active {
+    transform: translateY(1px);
+}
+
+/* --- CANCELAR --- */
+.modal-transferir__btn--secundario {
+    background: var(--bg-secondary);
+    border: 1.5px solid var(--line);
+    color: var(--ink);
+}
+
+.modal-transferir__btn--secundario:not(:disabled):hover {
+    border-color: var(--brand);
+}
+
+/* --- CONFIRMAR TRANSFERENCIA --- */
+.modal-transferir__btn--primario {
+    background: var(--brand);
+    border: 1.5px solid var(--brand);
+    color: #fff;
+}
+
+.modal-transferir__btn--primario:not(:disabled):hover {
+    opacity: 0.9;
+}
+
+/* --- RESPONSIVO --- */
+@media (max-width: 480px) {
+    .modal-transferir {
+        padding: 1.4rem 1.2rem 1.2rem;
+    }
+
+    .modal-transferir__acoes {
+        flex-direction: column-reverse;
+    }
+}
