@@ -1,0 +1,167 @@
+/* --- FUNDO ESCURO QUE COBRE A TELA --- */
+.modal-remover__overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    background: rgba(0, 0, 0, 0.55);
+    animation: modal-remover-fade 0.18s ease;
+}
+
+@keyframes modal-remover-fade {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+/* --- CAIXA CENTRAL DO MODAL --- */
+.modal-remover {
+    width: 100%;
+    max-width: 420px;
+    padding: 2rem 1.75rem 1.5rem;
+    background: var(--panel);
+    border: 1.5px solid var(--line);
+    border-radius: var(--radius-lg, 16px);
+    box-shadow: var(--shadow-md);
+    text-align: center;
+    animation: modal-remover-subir 0.2s ease;
+}
+
+@keyframes modal-remover-subir {
+    from {
+        opacity: 0;
+        transform: translateY(12px) scale(0.98);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* --- ICONE DE ALERTA (LIXEIRA VERMELHA) --- */
+.modal-remover__icone {
+    width: 56px;
+    height: 56px;
+    margin: 0 auto 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: rgba(220, 53, 69, 0.14);
+    color: #dc3545;
+}
+
+.modal-remover__icone svg {
+    width: 28px;
+    height: 28px;
+}
+
+/* --- TITULO --- */
+.modal-remover__titulo {
+    margin: 0 0 0.5rem;
+    font-size: 1.15rem;
+    color: var(--ink);
+}
+
+/* --- MENSAGEM PRINCIPAL --- */
+.modal-remover__mensagem {
+    margin: 0 0 1rem;
+    font-size: 0.92rem;
+    color: var(--muted);
+}
+
+/* --- RESUMO DO ITEM QUE SERA REMOVIDO --- */
+.modal-remover__resumo {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    padding: 0.85rem 1rem;
+    margin: 0 0 1.5rem;
+    background: var(--bg-secondary);
+    border: 1px solid var(--line-light);
+    border-radius: var(--radius-md, 12px);
+    text-align: left;
+}
+
+.modal-remover__evento {
+    color: var(--ink);
+    font-size: 0.95rem;
+}
+
+.modal-remover__detalhe {
+    color: var(--muted);
+    font-size: 0.85rem;
+}
+
+.modal-remover__qtd {
+    color: var(--muted);
+    font-size: 0.82rem;
+}
+
+/* --- ACOES --- */
+.modal-remover__acoes {
+    display: flex;
+    gap: 0.6rem;
+}
+
+.modal-remover__btn {
+    flex: 1;
+    padding: 0.78rem 1rem;
+    border-radius: var(--radius-md);
+    font-size: 0.9rem;
+    font-weight: 600;
+    font-family: inherit;
+    cursor: pointer;
+    transition: background 0.15s, border-color 0.15s, opacity 0.15s, transform 0.1s;
+}
+
+.modal-remover__btn:active {
+    transform: translateY(1px);
+}
+
+/* --- CANCELAR --- */
+.modal-remover__btn--secundario {
+    background: var(--bg-secondary);
+    border: 1.5px solid var(--line);
+    color: var(--ink);
+}
+
+.modal-remover__btn--secundario:hover {
+    border-color: var(--brand);
+}
+
+/* --- CONFIRMAR REMOCAO (VERMELHO) --- */
+.modal-remover__btn--perigo {
+    background: #dc3545;
+    border: 1.5px solid #dc3545;
+    color: #fff;
+}
+
+.modal-remover__btn--perigo:hover {
+    background: #c82333;
+    border-color: #c82333;
+}
+
+.modal-remover__btn--perigo:focus-visible {
+    outline: 2px solid #dc3545;
+    outline-offset: 2px;
+}
+
+/* --- RESPONSIVO --- */
+@media (max-width: 480px) {
+    .modal-remover {
+        padding: 1.5rem 1.25rem 1.25rem;
+    }
+
+    .modal-remover__acoes {
+        flex-direction: column-reverse;
+    }
+}
