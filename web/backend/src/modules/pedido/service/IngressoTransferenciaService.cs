@@ -13,7 +13,7 @@ public class IngressoTransferenciaService
         IPedidoRepository pedidoRepository,
         IUsuarioRepository usuarioRepository)
     {
-        _pedidoRepository  = pedidoRepository;
+        _pedidoRepository = pedidoRepository;
         _usuarioRepository = usuarioRepository;
     }
 

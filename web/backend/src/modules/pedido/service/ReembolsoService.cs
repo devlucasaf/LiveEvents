@@ -80,7 +80,6 @@ public class ReembolsoService
         // --- ATUALIZA STATUS DE PAGAMENTO E PEDIDO ---
         pagamento.Status                = StatusPagamento.Reembolsado;
         pagamento.DataPagamento         = agora;
-
         pedido.Status                   = StatusPedido.Reembolsado;
         pedido.ReembolsoSolicitadoEm    = agora;
         pedido.ReembolsoAprovadoEm      = agora;
@@ -122,8 +121,7 @@ public class ReembolsoService
         var pagamento = await _pedidoRepository.BuscarPagamentoPorPedidoIdAsync(pedidoId, cancellationToken)
             ?? throw new InvalidOperationException("Pagamento do pedido não encontrado.");
 
-        if (pedido.Status != StatusPedido.Reembolsado
-            || pagamento.Status != StatusPagamento.Reembolsado)
+        if (pedido.Status != StatusPedido.Reembolsado || pagamento.Status != StatusPagamento.Reembolsado)
         {
             throw new InvalidOperationException("Comprovante disponível apenas para pedidos estornados.");
         }

@@ -33,14 +33,14 @@ public class IngressoService
 
             resultado.Add(new IngressoDisponivelDto
             {
-                Id = ingresso.Id,
-                EventoId = ingresso.EventoId,
-                SetorCodigo = setor.Codigo,
-                Setor = ingresso.Setor,
-                Preco = ingresso.Preco,
-                PrecoMeia = CatalogoIngresso.CalcularPreco(ingresso.Preco, CatalogoIngresso.ModalidadeMeia),
-                PrecoSocial = CatalogoIngresso.CalcularPreco(ingresso.Preco, CatalogoIngresso.ModalidadeSocial),
-                QuantidadeDisponivel = ingresso.QuantidadeDisponivel
+                Id                      = ingresso.Id,
+                EventoId                = ingresso.EventoId,
+                SetorCodigo             = setor.Codigo,
+                Setor                   = ingresso.Setor,
+                Preco                   = ingresso.Preco,
+                PrecoMeia               = CatalogoIngresso.CalcularPreco(ingresso.Preco, CatalogoIngresso.ModalidadeMeia),
+                PrecoSocial             = CatalogoIngresso.CalcularPreco(ingresso.Preco, CatalogoIngresso.ModalidadeSocial),
+                QuantidadeDisponivel    = ingresso.QuantidadeDisponivel
             });
         }
 
@@ -62,9 +62,9 @@ public class IngressoService
                     Campos = CatalogoIngresso.CamposDocumento(s.Codigo)
                         .Select(c => new DocumentoCampoDto
                         {
-                            Chave = c.Chave,
-                            Rotulo = c.Rotulo,
-                            Tipo = c.Tipo,
+                            Chave       = c.Chave,
+                            Rotulo      = c.Rotulo,
+                            Tipo        = c.Tipo,
                             Obrigatorio = c.Obrigatorio
                         })
                         .ToList()
@@ -83,10 +83,10 @@ public class IngressoService
                 string.Equals(i.Setor, setor.Nome, StringComparison.OrdinalIgnoreCase)))
             .Select(setor => new IngressoEntity
             {
-                EventoId = eventoId,
-                Setor = setor.Nome,
-                Preco = setor.PrecoPadrao,
-                QuantidadeDisponivel = 500
+                EventoId                = eventoId,
+                Setor                   = setor.Nome,
+                Preco                   = setor.PrecoPadrao,
+                QuantidadeDisponivel    = 500
             })
             .ToList();
 
@@ -104,23 +104,23 @@ public class IngressoService
     {
         var ingresso = new IngressoEntity
         {
-            EventoId = dto.EventoId,
-            Setor = dto.Setor,
-            Preco = dto.Preco,
-            QuantidadeDisponivel = dto.QuantidadeDisponivel
+            EventoId                = dto.EventoId,
+            Setor                   = dto.Setor,
+            Preco                   = dto.Preco,
+            QuantidadeDisponivel    = dto.QuantidadeDisponivel
         };
 
         await _repository.AdicionarAsync(ingresso, cancellationToken);
 
         return new IngressoDisponivelDto
         {
-            Id = ingresso.Id,
-            EventoId = ingresso.EventoId,
-            Setor = ingresso.Setor,
-            Preco = ingresso.Preco,
-            PrecoMeia = CatalogoIngresso.CalcularPreco(ingresso.Preco, CatalogoIngresso.ModalidadeMeia),
-            PrecoSocial = CatalogoIngresso.CalcularPreco(ingresso.Preco, CatalogoIngresso.ModalidadeSocial),
-            QuantidadeDisponivel = ingresso.QuantidadeDisponivel
+            Id                      = ingresso.Id,
+            EventoId                = ingresso.EventoId,
+            Setor                   = ingresso.Setor,
+            Preco                   = ingresso.Preco,
+            PrecoMeia               = CatalogoIngresso.CalcularPreco(ingresso.Preco, CatalogoIngresso.ModalidadeMeia),
+            PrecoSocial             = CatalogoIngresso.CalcularPreco(ingresso.Preco, CatalogoIngresso.ModalidadeSocial),
+            QuantidadeDisponivel    = ingresso.QuantidadeDisponivel
         };
     }
 }

@@ -19,9 +19,9 @@ public class CheckinService
         IIngressoRepository ingressoRepository,
         IPedidoRepository pedidoRepository)
     {
-        _eventoRepository   = eventoRepository;
+        _eventoRepository = eventoRepository;
         _ingressoRepository = ingressoRepository;
-        _pedidoRepository   = pedidoRepository;
+        _pedidoRepository = pedidoRepository;
     }
 
     // --- VALIDA O TOKEN DO INGRESSO E BLOQUEIA REUTILIZACAO ALEM DO LIMITE ---
@@ -39,7 +39,8 @@ public class CheckinService
                 tokenInformado: token,
                 permitido: false,
                 mensagem: "Token do ingresso não informado.",
-                cancellationToken: cancellationToken);
+                cancellationToken: cancellationToken
+            );
         }
 
         // --- LOCALIZA O PEDIDO PELO TOKEN ---
@@ -52,7 +53,8 @@ public class CheckinService
                 tokenInformado: token,
                 permitido: false,
                 mensagem: "Ingresso inválido ou não encontrado.",
-                cancellationToken: cancellationToken);
+                cancellationToken: cancellationToken
+            );
         }
 
         // --- CALCULA A QUANTIDADE TOTAL DE INGRESSOS DO PEDIDO ---
@@ -95,14 +97,15 @@ public class CheckinService
 
     // --- REGISTRA A TENTATIVA DE CHECKIN E RETORNA A RESPOSTA PADRONIZADA ---
     private async Task<CheckinRespostaDto> RegistrarTentativaAsync(
-        PedidoEntity? pedido,
-        int operadorId,
-        string tokenInformado,
-        bool permitido,
-        string mensagem,
-        CancellationToken cancellationToken,
-        int quantidadeTotal = 0,
-        int usosRealizados = 0)
+        PedidoEntity?       pedido,
+        int                 operadorId,
+        string              tokenInformado,
+        bool                permitido,
+        string              mensagem,
+        CancellationToken   cancellationToken,
+        int                 quantidadeTotal = 0,
+        int                 usosRealizados = 0
+    )
     {
         // --- REGISTRA O LOG DA TENTATIVA ---
         var log = new PedidoCheckinLogEntity

@@ -154,8 +154,7 @@ public static class CatalogoIngresso
             var idade = CalcularIdade(nascimento);
             if (sub == "MENOR_18" && idade >= IdadeMaximaMenor18)
             {
-                throw new InvalidOperationException(
-                    "Cliente com 18 anos ou mais não pode usar a meia Menor de 18. Selecione outra meia (ex.: Estudantil).");
+                throw new InvalidOperationException("Cliente com 18 anos ou mais não pode usar a meia Menor de 18. Selecione outra meia (ex.: Estudantil).");
             }
         }
     }

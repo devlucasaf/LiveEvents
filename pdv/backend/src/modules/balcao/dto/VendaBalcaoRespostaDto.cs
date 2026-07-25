@@ -16,8 +16,6 @@ public class VendaBalcaoRespostaDto
     public decimal  ValorTotal      { get; set; }
     public DateTime DataVenda       { get; set; }
     public string?  QrCodeBase64    { get; set; }
-
-    // --- INFORMA SE UMA NOVA CONTA FOI CRIADA PARA O CLIENTE ---
     public bool     ContaCriada     { get; set; }
     public string?  SenhaInicial    { get; set; }
 }

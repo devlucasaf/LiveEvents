@@ -84,8 +84,7 @@ public class PedidoCriacaoService
                 var documentos = item.Documentos ?? new List<Dictionary<string, string?>>();
                 if (documentos.Count != item.Quantidade)
                 {
-                    throw new InvalidOperationException(
-                        $"Informe os documentos da meia entrada para cada ingresso do setor (esperado {item.Quantidade}).");
+                    throw new InvalidOperationException($"Informe os documentos da meia entrada para cada ingresso do setor (esperado {item.Quantidade}).");
                 }
 
                 foreach (var doc in documentos)
@@ -117,7 +116,7 @@ public class PedidoCriacaoService
         await _pedidoRepository.AdicionarPedidoAsync(pedido, cancellationToken);
         await _ingressoRepository.AtualizarAsync(cancellationToken);
 
-        // --- PROCESSA PAGAMENTO (SIMULADO PELO PagamentoService) ---
+        // --- PROCESSA PAGAMENTO ---
         var pagamento = _pagamentoService.ProcessarPagamento(dto, pedido.Id);
         await _pedidoRepository.AdicionarPagamentoAsync(pagamento, cancellationToken);
 
@@ -164,7 +163,6 @@ public class PedidoCriacaoService
             throw new InvalidOperationException("Preencha os dados obrigatórios do comprador para finalizar a compra.");
         }
 
-        // --- VALIDACOES DE FORMATO ---
         if (PedidoHelpers.SomenteDigitos(comprador.Cpf).Length != 11)
         {
             throw new InvalidOperationException("CPF do comprador inválido.");

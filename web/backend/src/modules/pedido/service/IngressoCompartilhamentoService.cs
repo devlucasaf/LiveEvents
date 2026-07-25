@@ -14,10 +14,11 @@ public class IngressoCompartilhamentoService
 
     // --- GERA LINK COMPARTILHAVEL COM VALIDADE E LIMITE DE ACESSOS ---
     public async Task<CompartilhamentoIngressoRespostaDto> GerarAsync(
-        int usuarioId,
-        int pedidoId,
-        CriarCompartilhamentoIngressoDto dto,
-        CancellationToken cancellationToken = default)
+        int                                 usuarioId,
+        int                                 pedidoId,
+        CriarCompartilhamentoIngressoDto    dto,
+        CancellationToken                   cancellationToken = default
+    )
     {
         var pedido = await _pedidoRepository.BuscarPorIdEUsuarioAsync(pedidoId, usuarioId, cancellationToken)
             ?? throw new KeyNotFoundException("Pedido não encontrado para este usuário.");

@@ -9,18 +9,18 @@ namespace LiveEventsTicket.Backend.Modules.Pedido.Service;
 // --- GERA O PDF DO INGRESSO PARA O DONO OU VIA LINK COMPARTILHADO ---
 public class IngressoPdfService
 {
-    private readonly IEventoRepository   _eventoRepository;
+    private readonly IEventoRepository _eventoRepository;
     private readonly IIngressoRepository _ingressoRepository;
-    private readonly IPedidoRepository   _pedidoRepository;
+    private readonly IPedidoRepository _pedidoRepository;
 
     public IngressoPdfService(
         IEventoRepository eventoRepository,
         IIngressoRepository ingressoRepository,
         IPedidoRepository pedidoRepository)
     {
-        _eventoRepository   = eventoRepository;
+        _eventoRepository = eventoRepository;
         _ingressoRepository = ingressoRepository;
-        _pedidoRepository   = pedidoRepository;
+        _pedidoRepository = pedidoRepository;
     }
 
     // --- GERA PDF DO INGRESSO PARA O USUARIO DONO DO PEDIDO ---

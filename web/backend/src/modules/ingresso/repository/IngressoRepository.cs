@@ -1,6 +1,7 @@
 using LiveEventsTicket.Backend.Infra.Config;
-using Microsoft.EntityFrameworkCore;
 using IngressoEntity = LiveEventsTicket.Backend.Modules.Ingresso.Model.Ingresso;
+
+using Microsoft.EntityFrameworkCore;
 
 namespace LiveEventsTicket.Backend.Modules.Ingresso.Repository;
 

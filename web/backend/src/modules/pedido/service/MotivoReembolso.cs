@@ -11,10 +11,25 @@ public static class MotivoReembolso
     // --- DESCRICAO PADRAO EXIBIDA AO USUARIO PARA CADA CODIGO ---
     public static readonly IReadOnlyDictionary<string, string> Descricoes = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
     {
-        { Arrependimento,   "Arrependimento dentro do prazo legal de 7 dias." },
-        { Impedimento,      "Impedimento pessoal para comparecer ao evento." },
-        { AlteracaoPlanos,  "Mudança de planos do comprador." },
-        { ErroCompra,       "Erro na compra (setor, quantidade ou dados)." },
-        { Outro,            "Outro motivo informado pelo comprador." }
+        { 
+            Arrependimento,   
+            "Arrependimento dentro do prazo legal de 7 dias." 
+        },
+        { 
+            Impedimento,      
+            "Impedimento pessoal para comparecer ao evento." 
+        },
+        { 
+            AlteracaoPlanos,  
+            "Mudança de planos do comprador." 
+        },
+        { 
+            ErroCompra,       
+            "Erro na compra (setor, quantidade ou dados)." 
+        },
+        { 
+            Outro,            
+            "Outro motivo informado pelo comprador." 
+        }
     };
 }

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import "../styles/modal-transferir-ingresso.css";
 
-// --- FORMATA UM CPF EM 000.000.000-00 CONFORME O USUARIO DIGITA ---
+// --- FORMATA UM CPF CONFORME O USUARIO DIGITA ---
 function formatarCpf(valor) {
     const digitos = String(valor || "").replace(/\D/g, "").slice(0, 11);
 

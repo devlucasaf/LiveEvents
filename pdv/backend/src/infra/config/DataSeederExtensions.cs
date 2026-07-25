@@ -123,7 +123,8 @@ public static class DataSeederExtensions
         var script  = context.Database.GenerateCreateScript();
         var batches = script.Split(
             new[] { "\r\nGO\r\n", "\nGO\n", "\r\nGO", "\nGO" },
-            StringSplitOptions.RemoveEmptyEntries);
+            StringSplitOptions.RemoveEmptyEntries
+        );
 
         foreach (var batch in batches)
         {

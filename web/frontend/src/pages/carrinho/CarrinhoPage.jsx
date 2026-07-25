@@ -1,7 +1,7 @@
-import { useState }              from "react";
-import { Link, useNavigate }    from "react-router-dom";
-import { useCarrinho }          from "../../context/CarrinhoContext";
-import ModalConfirmarRemocao    from "../../components/ModalConfirmarRemocao";
+import { useState }                 from "react";
+import { Link, useNavigate }        from "react-router-dom";
+import { useCarrinho }              from "../../context/CarrinhoContext";
+import ModalConfirmarRemocao        from "../../components/ModalConfirmarRemocao";
 import "../../styles/carrinho.css";
 
 function formatarMoeda(valor) {

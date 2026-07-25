@@ -35,12 +35,12 @@ public class EventoService
     {
         var evento = new EventoEntity
         {
-            Titulo = dto.Titulo,
-            Categoria = dto.Categoria,
-            Local = dto.Local,
-            DataEvento = dto.DataEvento,
-            Descricao = dto.Descricao,
-            ImagemUrl = dto.ImagemUrl
+            Titulo      = dto.Titulo,
+            Categoria   = dto.Categoria,
+            Local       = dto.Local,
+            DataEvento  = dto.DataEvento,
+            Descricao   = dto.Descricao,
+            ImagemUrl   = dto.ImagemUrl
         };
 
         await _repository.AdicionarAsync(evento, cancellationToken);
@@ -50,12 +50,12 @@ public class EventoService
     // --- MAPEAMENTO DE ENTIDADE PARA DTO DE RESPOSTA ---
     private static EventoResumoDto Map(EventoEntity evento) => new()
     {
-        Id = evento.Id,
-        Titulo = evento.Titulo,
-        Categoria = evento.Categoria,
-        Local = evento.Local,
-        DataEvento = evento.DataEvento,
-        Descricao = evento.Descricao,
-        ImagemUrl = evento.ImagemUrl
+        Id          = evento.Id,
+        Titulo      = evento.Titulo,
+        Categoria   = evento.Categoria,
+        Local       = evento.Local,
+        DataEvento  = evento.DataEvento,
+        Descricao   = evento.Descricao,
+        ImagemUrl   = evento.ImagemUrl
     };
 }

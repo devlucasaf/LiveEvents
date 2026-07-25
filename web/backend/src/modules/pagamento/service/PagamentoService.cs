@@ -11,7 +11,7 @@ public class PagamentoService
     {
         var tipo = dto.Pagamento.Tipo.ToUpperInvariant();
 
-        // --- PAGAMENTO VIA CARTAO (SIMULACAO: APROVA QUANDO O ULTIMO DIGITO E PAR) ---
+        // --- PAGAMENTO VIA CARTAO ---
         if (tipo == "CARTAO")
         {
             var numero          = dto.Pagamento.NumeroCartao ?? string.Empty;
@@ -28,7 +28,7 @@ public class PagamentoService
             };
         }
 
-        // --- PAGAMENTO VIA PIX (SEMPRE APROVADO NA SIMULACAO) ---
+        // --- PAGAMENTO VIA PIX ---
         return new PagamentoEntity
         {
             PedidoId    = pedidoId,

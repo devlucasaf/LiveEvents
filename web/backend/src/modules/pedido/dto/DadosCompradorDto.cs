@@ -8,7 +8,6 @@ public class DadosCompradorDto
     [StringLength(200, MinimumLength = 2, ErrorMessage = "O nome deve ter entre 2 e 200 caracteres.")]
     public string   Nome         	{ get; set; } = string.Empty;
 
-    // --- CPF: 11 DIGITOS COM OU SEM MASCARA ---
     [Required(ErrorMessage = "O CPF do comprador é obrigatório.")]
     [RegularExpression(@"^\d{3}\.?\d{3}\.?\d{3}-?\d{2}$", ErrorMessage = "Informe um CPF válido.")]
     public string   Cpf          	{ get; set; } = string.Empty;
@@ -22,12 +21,10 @@ public class DadosCompradorDto
     [StringLength(20, MinimumLength = 8, ErrorMessage = "Informe um telefone válido.")]
     public string   Telefone        { get; set; } = string.Empty;
 
-    // --- DATA DE NASCIMENTO EM STRING (MANTIDO O CONTRATO EXISTENTE COM O FRONT) ---
     [Required(ErrorMessage = "A data de nascimento é obrigatória.")]
     [StringLength(20)]
     public string   DataNascimento	{ get; set; } = string.Empty;
 
-    // --- CEP: 8 DIGITOS COM OU SEM MASCARA ---
     [Required(ErrorMessage = "O CEP é obrigatório.")]
     [RegularExpression(@"^\d{5}-?\d{3}$", ErrorMessage = "Informe um CEP válido.")]
     public string   Cep          	{ get; set; } = string.Empty;
@@ -51,7 +48,6 @@ public class DadosCompradorDto
     [StringLength(100)]
     public string   Cidade       	{ get; set; } = string.Empty;
 
-    // --- ESTADO: SIGLA DE 2 LETRAS ---
     [Required(ErrorMessage = "O estado é obrigatório.")]
     [RegularExpression(@"^[A-Za-z]{2}$", ErrorMessage = "Informe a sigla do estado com 2 letras.")]
     public string   Estado       	{ get; set; } = string.Empty;

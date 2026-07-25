@@ -29,7 +29,7 @@ const MOTIVOS_REEMBOLSO = [
   }
 ];
 
-// --- PAINEL DO USUARIO PARA GERENCIAR INGRESSOS E REEMBOLSOS ---
+// --- PAINEL DO USUARIO PARA GERENCIAR INGRESSOS, REEMBOLSOS E TRANSFERÊNCIAS ---
 export default function MeusEventosPage() {
   const [tab,                           setTab]                           = useState("upcoming");
   const [pedidos,                       setPedidos]                       = useState([]);
@@ -44,8 +44,6 @@ export default function MeusEventosPage() {
   const [copiado,                       setCopiado]                       = useState("");
   const [motivoCodigo,                  setMotivoCodigo]                  = useState("ARREPENDIMENTO_7_DIAS");
   const [motivoDetalhe,                 setMotivoDetalhe]                 = useState("");
-
-  // --- ESTADO DO MODAL DE TRANSFERENCIA DE INGRESSO ---
   const [transferenciaAberta,           setTransferenciaAberta]           = useState(false);
   const [processandoTransferencia,      setProcessandoTransferencia]      = useState(false);
   const [erroTransferencia,             setErroTransferencia]             = useState("");
@@ -398,13 +396,12 @@ export default function MeusEventosPage() {
     setProcessandoTransferencia(true);
 
     try {
-      // --- CHAMA O ENDPOINT DE TRANSFERENCIA ---
       const resposta = await pedidoService.transferirIngresso(ingressoSelecionado.id, {
         emailDestinatario,
         cpfDestinatario
       });
 
-      // --- REMOVE O PEDIDO DA LISTA LOCAL: ELE NAO PERTENCE MAIS AO USUARIO LOGADO ---
+      // --- REMOVE O PEDIDO DA LISTA LOCAL ---
       setPedidos((prev) => prev.filter((pedido) => pedido.id !== ingressoSelecionado.id));
 
       setSucessoTransferencia(

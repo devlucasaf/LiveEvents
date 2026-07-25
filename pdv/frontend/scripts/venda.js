@@ -916,7 +916,7 @@
             cep:            form.elements["cep"].value.trim() || null,
             logradouro:     form.elements["logradouro"].value.trim() || null,
             numero:         form.elements["numero"].value.trim() || null,
-            complemento:     form.elements["complemento"].value.trim() || null,
+            complemento:    form.elements["complemento"].value.trim() || null,
             bairro:         form.elements["bairro"].value.trim() || null,
             cidade:         form.elements["cidade"].value.trim() || null,
             estado:         form.elements["estado"].value.trim() || null

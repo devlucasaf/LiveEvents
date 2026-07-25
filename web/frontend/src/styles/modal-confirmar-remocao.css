@@ -46,7 +46,7 @@
     }
 }
 
-/* --- ICONE DE ALERTA (LIXEIRA VERMELHA) --- */
+/* --- ICONE DE ALERTA --- */
 .modal-remover__icone {
     width: 56px;
     height: 56px;
@@ -138,7 +138,7 @@
     border-color: var(--brand);
 }
 
-/* --- CONFIRMAR REMOCAO (VERMELHO) --- */
+/* --- CONFIRMAR REMOCAO --- */
 .modal-remover__btn--perigo {
     background: #dc3545;
     border: 1.5px solid #dc3545;

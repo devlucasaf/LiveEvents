@@ -1,5 +1,6 @@
 using LiveEventsTicket.Backend.Modules.Ingresso.Dto;
 using LiveEventsTicket.Backend.Modules.Ingresso.Service;
+
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
