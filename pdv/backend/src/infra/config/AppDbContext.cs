@@ -21,7 +21,7 @@ public class AppDbContext : DbContext
     public DbSet<Assento>       Assentos        => Set<Assento>();
     public DbSet<VendaFisica>   VendasFisicas   => Set<VendaFisica>();
 
-    // --- REGISTRO LOCAL DAS VENDAS DE BALCÃO (COM ENDEREÇO DO CLIENTE) ---
+    // --- REGISTRO LOCAL DAS VENDAS DE BALCÃO ---
     public DbSet<VendaBalcao>   VendasBalcao    => Set<VendaBalcao>();
 
     // --- CONFIGURAÇÃO DO MODELO ---

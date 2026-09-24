@@ -31,17 +31,13 @@ export default function Select({ value, onChange, options = [], placeholder = "S
 
     return (
         <div className="select" ref={ref}>
-            {/* --- BOTAO GATILHO QUE ABRE/FECHA A LISTA --- */}
-            <button
-                type="button"
-                className={`select__trigger ${!selecionado ? "select__trigger--placeholder" : ""}`}
-                onClick={() => setAberto((v) => !v)}
-            >
+            {/* --- BOTÃO GATILHO QUE ABRE/FECHA A LISTA --- */}
+            <button type="button" className={`select__trigger ${!selecionado ? "select__trigger--placeholder" : ""}`} onClick={() => setAberto((v) => !v)}>
                 {selecionado ? selecionado.label : placeholder}
                 <span className={`select__seta ${aberto ? "select__seta--aberta" : ""}`}>▾</span>
             </button>
 
-            {/* --- INPUT OCULTO PARA MANTER A VALIDACAO NATIVA --- */}
+            {/* --- INPUT OCULTO PARA MANTER A VALIDAÇÃO NATIVA --- */}
             {required && (
                 <input
                     className="select__hidden-input"
@@ -52,15 +48,11 @@ export default function Select({ value, onChange, options = [], placeholder = "S
                 />
             )}
 
-            {/* --- LISTA DE OPCOES CUSTOMIZADA --- */}
+            {/* --- LISTA DE OPÇÕES CUSTOMIZADA --- */}
             {aberto && (
                 <ul className="select__opcoes">
                     {itens.map((item) => (
-                        <li
-                            key={item.value}
-                            className={`select__opcao ${item.value === value ? "select__opcao--ativa" : ""}`}
-                            onClick={() => selecionar(item.value)}
-                        >
+                        <li key={item.value} className={`select__opcao ${item.value === value ? "select__opcao--ativa" : ""}`} onClick={() => selecionar(item.value)}>
                             {item.label}
                         </li>
                     ))}

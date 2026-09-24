@@ -3,7 +3,7 @@ import { apiRequest } from "./api";
 // --- CENTRALIZA LOGIN, CADASTRO E PERFIL ---
 export const authService = {
 
-    // --- AUTENTICA O USUARIO E PERSISTE TOKEN + DADOS NA SESSAO ---
+    // --- AUTENTICA O USUÁRIO E PERSISTE TOKEN + DADOS NA SESSÃO ---
     async login(payload) {
         const data = await apiRequest("/usuario/login", {
             method: "POST",
@@ -15,7 +15,7 @@ export const authService = {
         return data;
     },
 
-    // --- REGISTRA UM NOVO USUARIO ---
+    // --- REGISTRA UM NOVO USUÁRIO ---
     async cadastro(payload) {
         return apiRequest("/usuario/registrar", {
             method: "POST",
@@ -23,13 +23,13 @@ export const authService = {
         });
     },
 
-    // --- ENCERRA A SESSAO REMOVENDO TOKEN E USUARIO ---
+    // --- ENCERRA A SESSÃO REMOVENDO TOKEN E USUÁRIO ---
     logout() {
         localStorage.removeItem("token");
         localStorage.removeItem("usuario");
     },
 
-    // --- ATUALIZA O PERFIL DO USUARIO LOGADO ---
+    // --- ATUALIZA O PERFIL DO USUÁRIO LOGADO ---
     async atualizarPerfil(payload) {
         const data = await apiRequest("/usuario/me", {
             method: "PUT",
@@ -40,7 +40,7 @@ export const authService = {
         return data;
     },
 
-    // --- BUSCA O PERFIL ATUAL DO USUARIO LOGADO ---
+    // --- BUSCA O PERFIL ATUAL DO USUÁRIO LOGADO ---
     async buscarPerfil() {
         const data = await apiRequest("/usuario/me");
 

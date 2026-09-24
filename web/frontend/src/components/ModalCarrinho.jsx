@@ -28,18 +28,10 @@ export default function ModalCarrinho({ aberto, item, onIrCarrinho, onContinuar 
 
                 {/* --- ACOES: IR PARA O CARRINHO OU CONTINUAR --- */}
                 <div className="modal-carrinho__acoes">
-                    <button
-                        type="button"
-                        className="modal-carrinho__btn modal-carrinho__btn--secundario"
-                        onClick={onContinuar}
-                    >
+                    <button type="button" className="modal-carrinho__btn modal-carrinho__btn--secundario" onClick={onContinuar}>
                         Continuar comprando
                     </button>
-                    <button
-                        type="button"
-                        className="modal-carrinho__btn modal-carrinho__btn--primario"
-                        onClick={onIrCarrinho}
-                    >
+                    <button type="button" className="modal-carrinho__btn modal-carrinho__btn--primario" onClick={onIrCarrinho}>
                         Ir para o carrinho
                     </button>
                 </div>

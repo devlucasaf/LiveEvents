@@ -122,13 +122,8 @@ export default function DatePicker({ value, onChange, placeholder = "Data de nas
         for (let dia = 1; dia <= diasNoMes; dia++) {
             const ehSelecionado = value && value === `${anoAtual}-${String(mesAtual + 1).padStart(2, "0")}-${String(dia).padStart(2, "0")}`;
             celulas.push(
-                <button
-                    key={dia}
-                    type="button"
-                    className={`datepicker__dia ${ehSelecionado ? "datepicker__dia--selecionado" : ""}`}
-                    onClick={() => selecionarDia(dia)}
-                >
-                {dia}
+                <button key={dia} type="button" className={`datepicker__dia ${ehSelecionado ? "datepicker__dia--selecionado" : ""}`} onClick={() => selecionarDia(dia)}>
+                    {dia}
                 </button>
             );
         }
@@ -161,24 +156,9 @@ export default function DatePicker({ value, onChange, placeholder = "Data de nas
             />
             <svg className="datepicker__icone" onClick={() => setAberto(!aberto)} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
-                <line 
-                    x1="16" 
-                    y1="2" 
-                    x2="16" 
-                    y2="6"
-                />
-                <line 
-                    x1="8" 
-                    y1="2" 
-                    x2="8" 
-                    y2="6"
-                />
-                <line 
-                    x1="3" 
-                    y1="10" 
-                    x2="21" 
-                    y2="10"
-                />
+                <line x1="16" y1="2" x2="16" y2="6"/>
+                <line x1="8" y1="2" x2="8" y2="6"/>
+                <line x1="3" y1="10" x2="21" y2="10"/>
             </svg>
 
             {aberto && (
@@ -189,22 +169,14 @@ export default function DatePicker({ value, onChange, placeholder = "Data de nas
                         <div className="datepicker__seletores">
                             {/* --- SELETOR CUSTOMIZADO DE MÊS --- */}
                             <div className="datepicker__select-wrap">
-                                <button
-                                    type="button"
-                                    className="datepicker__select"
-                                    onClick={() => setSeletorAberto(seletorAberto === "mes" ? null : "mes")}
-                                >
+                                <button type="button" className="datepicker__select" onClick={() => setSeletorAberto(seletorAberto === "mes" ? null : "mes")}>
                                     {MESES[mesAtual]}
                                     <span className="datepicker__select-seta">▾</span>
                                 </button>
                                 {seletorAberto === "mes" && (
                                     <ul className="datepicker__opcoes">
                                         {MESES.map((m, i) => (
-                                            <li
-                                                key={m}
-                                                className={`datepicker__opcao ${i === mesAtual ? "datepicker__opcao--ativa" : ""}`}
-                                                onClick={() => { setMesAtual(i); setSeletorAberto(null); }}
-                                            >
+                                            <li key={m} className={`datepicker__opcao ${i === mesAtual ? "datepicker__opcao--ativa" : ""}`} onClick={() => { setMesAtual(i); setSeletorAberto(null); }}>
                                                 {m}
                                             </li>
                                         ))}
@@ -214,22 +186,14 @@ export default function DatePicker({ value, onChange, placeholder = "Data de nas
 
                             {/* --- SELETOR CUSTOMIZADO DE ANO --- */}
                             <div className="datepicker__select-wrap">
-                                <button
-                                    type="button"
-                                    className="datepicker__select"
-                                    onClick={() => setSeletorAberto(seletorAberto === "ano" ? null : "ano")}
-                                >
+                                <button type="button" className="datepicker__select" onClick={() => setSeletorAberto(seletorAberto === "ano" ? null : "ano")}>
                                     {anoAtual}
                                     <span className="datepicker__select-seta">▾</span>
                                 </button>
                                 {seletorAberto === "ano" && (
                                     <ul className="datepicker__opcoes" ref={refListaAno}>
                                         {anosDisponiveis.map((a) => (
-                                            <li
-                                                key={a}
-                                                className={`datepicker__opcao ${a === anoAtual ? "datepicker__opcao--ativa" : ""}`}
-                                                onClick={() => { setAnoAtual(a); setSeletorAberto(null); }}
-                                            >
+                                            <li key={a} className={`datepicker__opcao ${a === anoAtual ? "datepicker__opcao--ativa" : ""}`} onClick={() => { setAnoAtual(a); setSeletorAberto(null); }}>
                                                 {a}
                                             </li>
                                         ))}

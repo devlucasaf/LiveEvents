@@ -1,6 +1,6 @@
 import "../styles/modal-confirmar-remocao.css";
 
-// --- MODAL: CONFIRMAR REMOCAO DE ITEM DO CARRINHO ---
+// --- CONFIRMAR REMOÇÃO DE ITEM DO CARRINHO ---
 export default function ModalConfirmarRemocao({ aberto, item, onConfirmar, onCancelar }) {
     if (!aberto) {
         return null;
@@ -9,14 +9,8 @@ export default function ModalConfirmarRemocao({ aberto, item, onConfirmar, onCan
     return (
         <div className="modal-remover__overlay" onClick={onCancelar} role="presentation">
             {/* --- CAIXA CENTRAL --- */}
-            <div
-                className="modal-remover"
-                onClick={(e) => e.stopPropagation()}
-                role="dialog"
-                aria-modal="true"
-                aria-labelledby="modal-remover-titulo"
-            >
-                {/* --- ICONE DE ALERTA --- */}
+            <div className="modal-remover" onClick={(e) => e.stopPropagation()} role="dialog" aria-modal="true" aria-labelledby="modal-remover-titulo">
+                {/* --- ÍCONE DE ALERTA --- */}
                 <div className="modal-remover__icone">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                         <path d="M3 6h18" />
@@ -27,7 +21,7 @@ export default function ModalConfirmarRemocao({ aberto, item, onConfirmar, onCan
                     </svg>
                 </div>
 
-                {/* --- TITULO --- */}
+                {/* --- TÍTULO --- */}
                 <h3 id="modal-remover-titulo" className="modal-remover__titulo">
                     Remover do carrinho?
                 </h3>
@@ -37,7 +31,7 @@ export default function ModalConfirmarRemocao({ aberto, item, onConfirmar, onCan
                     Tem certeza que deseja remover este item do carrinho?
                 </p>
 
-                {/* --- RESUMO DO ITEM QUE SERA REMOVIDO --- */}
+                {/* --- RESUMO DO ITEM QUE SERÁ REMOVIDO --- */}
                 {item && (
                     <div className="modal-remover__resumo">
                         <strong className="modal-remover__evento">{item.eventoTitulo}</strong>
@@ -50,19 +44,10 @@ export default function ModalConfirmarRemocao({ aberto, item, onConfirmar, onCan
 
                 {/* --- ACOES: CANCELAR OU CONFIRMAR REMOCAO --- */}
                 <div className="modal-remover__acoes">
-                    <button
-                        type="button"
-                        className="modal-remover__btn modal-remover__btn--secundario"
-                        onClick={onCancelar}
-                    >
+                    <button type="button" className="modal-remover__btn modal-remover__btn--secundario" onClick={onCancelar}>
                         Cancelar
                     </button>
-                    <button
-                        type="button"
-                        className="modal-remover__btn modal-remover__btn--perigo"
-                        onClick={onConfirmar}
-                        autoFocus
-                    >
+                    <button type="button" className="modal-remover__btn modal-remover__btn--perigo" onClick={onConfirmar} autoFocus>
                         Sim, remover
                     </button>
                 </div>

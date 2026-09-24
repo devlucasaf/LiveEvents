@@ -2,7 +2,7 @@ import { apiRequest } from "./api";
 
 const API_BASE_URL = "http://localhost:5000/api";
 
-// --- CHAMADAS DA API RELACIONADAS A PEDIDOS E POS-COMPRA ---
+// --- CHAMADAS DA API RELACIONADAS A PEDIDOS E PÓS-COMPRA ---
 export const pedidoService = {
     checkout(payload) {
         return apiRequest("/pedido/checkout", {
@@ -11,7 +11,7 @@ export const pedidoService = {
         });
     },
 
-    // --- LISTA OS PEDIDOS DO USUARIO AUTENTICADO ---
+    // --- LISTA OS PEDIDOS DO USUÁRIO AUTENTICADO ---
     meusPedidos() {
         return apiRequest("/pedido/meus");
     },
@@ -26,7 +26,7 @@ export const pedidoService = {
                 motivoDetalhe: payload.motivoDetalhe || ""
             };
 
-        // --- ENVIA A SOLICITACAO DE REEMBOLSO PARA O PEDIDO INFORMADO ---
+        // --- ENVIA A SOLICITAÇÃO DE REEMBOLSO PARA O PEDIDO INFORMADO ---
         return apiRequest(`/pedido/${pedidoId}/reembolso/solicitar`, {
             method: "POST",
             body: JSON.stringify(body)
@@ -99,7 +99,7 @@ export const pedidoService = {
         };
     },
 
-    // --- GERA LINK TEMPORARIO PARA COMPARTILHAR PDF DO INGRESSO ---
+    // --- GERA LINK TEMPORÁRIO PARA COMPARTILHAR PDF DO INGRESSO ---
     gerarLinkCompartilhamento(pedidoId, payload = {}) {
         return apiRequest(`/pedido/${pedidoId}/compartilhar`, {
             method: "POST",
@@ -114,7 +114,7 @@ export const pedidoService = {
         });
     },
 
-    // --- TRANSFERE O INGRESSO PARA OUTRO USUARIO IDENTIFICADO POR EMAIL + CPF ---
+    // --- TRANSFERE O INGRESSO PARA OUTRO USUÁRIO IDENTIFICADO POR EMAIL + CPF ---
     transferirIngresso(pedidoId, payload = {}) {
         const body = {
             emailDestinatario: (payload.emailDestinatario || "").trim(),
@@ -127,7 +127,7 @@ export const pedidoService = {
         });
     },
 
-    // --- OBTEM O RELATORIO DE VENDAS DO MODULO ADMIN ---
+    // --- OBTÉM O RELATÓRIO DE VENDAS DO MÓDULO ADMIN ---
     relatorioVendas() {
         return apiRequest("/admin/relatorio/vendas");
     }

@@ -36,8 +36,8 @@ public static class DataSeederExtensions
                 new Produto { Nome = "Refrigerante 350ml",  CodigoBarras = "7891000000017", Preco = 6.50m,  EstoqueAtual = 120 },
                 new Produto { Nome = "Cerveja Lata 473ml",  CodigoBarras = "7891000000024", Preco = 9.90m,  EstoqueAtual = 200 },
                 new Produto { Nome = "Água Mineral 500ml",  CodigoBarras = "7891000000031", Preco = 4.00m,  EstoqueAtual = 300 },
-                new Produto { Nome = "Pipoca Pequena",       CodigoBarras = "7891000000048", Preco = 12.00m, EstoqueAtual = 80 },
-                new Produto { Nome = "Hot Dog",              CodigoBarras = "7891000000055", Preco = 15.00m, EstoqueAtual = 60 }
+                new Produto { Nome = "Pipoca Pequena",      CodigoBarras = "7891000000048", Preco = 12.00m, EstoqueAtual = 80 },
+                new Produto { Nome = "Hot Dog",             CodigoBarras = "7891000000055", Preco = 15.00m, EstoqueAtual = 60 }
             );
         }
 
@@ -119,7 +119,7 @@ public static class DataSeederExtensions
             await creator.CreateAsync();
         }
 
-        // --- GERA O SCRIPT DE CRIACAO A PARTIR DO MODELO DO EF ---
+        // --- GERA O SCRIPT DE CRIAÇÃO A PARTIR DO MODELO DO EF ---
         var script  = context.Database.GenerateCreateScript();
         var batches = script.Split(
             new[] { "\r\nGO\r\n", "\nGO\n", "\r\nGO", "\nGO" },

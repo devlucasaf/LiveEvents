@@ -19,21 +19,13 @@ function formatarCpf(valor) {
     return `${digitos.slice(0, 3)}.${digitos.slice(3, 6)}.${digitos.slice(6, 9)}-${digitos.slice(9)}`;
 }
 
-// --- TRANSFERIR INGRESSO PARA OUTRO USUARIO POR EMAIL + CPF ---
-export default function ModalTransferirIngresso({
-    aberto,
-    pedido,
-    processando,
-    erro,
-    sucesso,
-    onConfirmar,
-    onFechar
-}) {
+// --- TRANSFERIR INGRESSO PARA OUTRO USUÁRIO POR EMAIL + CPF ---
+export default function ModalTransferirIngresso({aberto, pedido, processando, erro, sucesso, onConfirmar, onFechar}) {
     const [email,      setEmail]      = useState("");
     const [cpf,        setCpf]        = useState("");
     const [erroLocal,  setErroLocal]  = useState("");
 
-    // --- LIMPA O FORMULARIO SEMPRE QUE O MODAL FOR (RE)ABERTO ---
+    // --- LIMPA O FORMULÁRIO SEMPRE QUE O MODAL FOR ABERTO ---
     useEffect(() => {
         if (aberto) {
             setEmail("");
@@ -46,12 +38,12 @@ export default function ModalTransferirIngresso({
         return null;
     }
 
-    // --- VALIDA E DISPARA A CONFIRMACAO PARA O COMPONENTE PAI ---
+    // --- VALIDA E DISPARA A CONFIRMAÇÃO PARA O COMPONENTE PAI ---
     function submeter(evento) {
         evento.preventDefault();
         setErroLocal("");
 
-        // --- CHECA EMAIL BASICO ---
+        // --- CHECA EMAIL BÁSICO ---
         const emailNorm = email.trim();
         if (!emailNorm || !/^\S+@\S+\.\S+$/.test(emailNorm)) {
             setErroLocal("Informe um e-mail válido.");
@@ -75,13 +67,8 @@ export default function ModalTransferirIngresso({
     return (
         <div className="modal-transferir__overlay" onClick={onFechar} role="presentation">
             {/* --- CAIXA CENTRAL COM STOP PROPAGATION P/ CLIQUES INTERNOS --- */}
-            <div
-                className="modal-transferir"
-                onClick={(e) => e.stopPropagation()}
-                role="dialog"
-                aria-modal="true"
-                aria-labelledby="modal-transferir-titulo"
-            >
+            <div className="modal-transferir" onClick={(e) => e.stopPropagation()} role="dialog"
+                aria-modal="true" aria-labelledby="modal-transferir-titulo">
                 {/* --- ICONE DE TRANSFERENCIA --- */}
                 <div className="modal-transferir__icone">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -163,20 +150,11 @@ export default function ModalTransferirIngresso({
 
                     {/* --- CANCELAR OU CONFIRMAR --- */}
                     <div className="modal-transferir__acoes">
-                        <button
-                            type="button"
-                            className="modal-transferir__btn modal-transferir__btn--secundario"
-                            onClick={onFechar}
-                            disabled={processando}
-                        >
+                        <button type="button" className="modal-transferir__btn modal-transferir__btn--secundario" onClick={onFechar} disabled={processando}>
                             {sucesso ? "Fechar" : "Cancelar"}
                         </button>
                         {!sucesso && (
-                            <button
-                                type="submit"
-                                className="modal-transferir__btn modal-transferir__btn--primario"
-                                disabled={processando}
-                            >
+                            <button type="submit" className="modal-transferir__btn modal-transferir__btn--primario" disabled={processando}>
                                 {processando ? "Transferindo..." : "Confirmar transferência"}
                             </button>
                         )}

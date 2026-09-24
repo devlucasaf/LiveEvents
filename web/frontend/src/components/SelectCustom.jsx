@@ -30,7 +30,7 @@ export default function SelectCustom({ value, onChange, options = [], placeholde
         return () => document.removeEventListener("keydown", aoTeclar);
     }, []);
 
-    // --- SELECIONA UMA OPCAO E FECHA O MENU ---
+    // --- SELECIONA UMA OPÇÃO E FECHA O MENU ---
     function selecionar(op) {
         onChange(op.value);
         setAberto(false);
@@ -38,21 +38,14 @@ export default function SelectCustom({ value, onChange, options = [], placeholde
 
     return (
         <div className={`select-custom ${disabled ? "select-custom--disabled" : ""}`} ref={raizRef}>
-            {/* --- BOTAO QUE ABRE/FECHA O MENU --- */}
-            <button
-                type="button"
-                className={`select-custom__trigger ${aberto ? "select-custom__trigger--aberto" : ""}`}
-                onClick={() => !disabled && setAberto((a) => !a)}
-                disabled={disabled}
-            >
+            {/* --- BOTÃO QUE ABRE/FECHA O MENU --- */}
+            <button type="button" className={`select-custom__trigger ${aberto ? "select-custom__trigger--aberto" : ""}`}
+                    onClick={() => !disabled && setAberto((a) => !a)} disabled={disabled}>
                 <span className={selecionada ? "" : "select-custom__placeholder"}>
                     {selecionada ? selecionada.label : placeholder}
                 </span>
-                <svg
-                    className={`select-custom__seta ${aberto ? "select-custom__seta--aberta" : ""}`}
-                    viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"
-                    strokeLinecap="round" strokeLinejoin="round"
-                >
+                <svg className={`select-custom__seta ${aberto ? "select-custom__seta--aberta" : ""}`} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"
+                        strokeLinecap="round" strokeLinejoin="round">
                     <polyline points="6 9 12 15 18 9" />
                 </svg>
             </button>
@@ -61,13 +54,8 @@ export default function SelectCustom({ value, onChange, options = [], placeholde
             {aberto && (
                 <ul className="select-custom__menu" role="listbox">
                     {options.map((op) => (
-                        <li
-                            key={op.value}
-                            role="option"
-                            aria-selected={op.value === value}
-                            className={`select-custom__opcao ${op.value === value ? "select-custom__opcao--ativa" : ""}`}
-                            onClick={() => selecionar(op)}
-                        >
+                        <li key={op.value} role="option" aria-selected={op.value === value} 
+                                className={`select-custom__opcao ${op.value === value ? "select-custom__opcao--ativa" : ""}`} onClick={() => selecionar(op)}>
                             {op.label}
                             {op.value === value && (
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">

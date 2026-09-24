@@ -1,15 +1,15 @@
 const API_BASE_URL = "http://localhost:5000/api";
 
-// --- EXECUTA REQUISICAO HTTP AUTENTICADA PARA A API ---
+// --- EXECUTA REQUISIÇÃO HTTP AUTENTICADA PARA A API ---
 export async function apiRequest(path, options = {}) {
     const token = localStorage.getItem("token");
 
-    // --- MONTA A REQUISICAO COM CABECALHOS PADRAO E TOKEN ---
+    // --- MONTA A REQUISIÇÃO COM CABECALHOS PADRAO E TOKEN ---
     const response = await fetch(`${API_BASE_URL}${path}`, {
         headers: {
-        "Content-Type": "application/json",
-        ...(token ? { Authorization: `Bearer ${token}` } : {}),
-        ...(options.headers || {})
+            "Content-Type": "application/json",
+            ...(token ? { Authorization: `Bearer ${token}` } : {}),
+            ...(options.headers || {})
         },
         ...options
     });

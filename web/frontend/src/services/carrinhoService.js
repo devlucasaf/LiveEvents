@@ -1,6 +1,6 @@
 const CHAVE = "carrinho";
 
-// --- LE OS ITENS ATUAIS DO CARRINHO A PARTIR DO localStorage ---
+// --- LÊ OS ITENS ATUAIS DO CARRINHO A PARTIR DO localStorage ---
 function lerItens() {
     try {
         const bruto = localStorage.getItem(CHAVE);
@@ -11,14 +11,14 @@ function lerItens() {
     }
 }
 
-// --- GRAVA OS ITENS E AVISA A APLICACAO QUE O CARRINHO MUDOU ---
+// --- GRAVA OS ITENS E AVISA A APLICAÇÃO QUE O CARRINHO MUDOU ---
 function gravarItens(itens) {
     localStorage.setItem(CHAVE, JSON.stringify(itens));
     window.dispatchEvent(new Event("carrinho:atualizado"));
     return itens;
 }
 
-// --- GERA UMA CHAVE UNICA POR INGRESSO + MODALIDADE + SUBTIPO ---
+// --- GERA UMA CHAVE ÚNICA POR INGRESSO + MODALIDADE + SUBTIPO ---
 function chaveItem(item) {
     return `${item.ingressoId}|${item.modalidade}|${item.subtipoMeia || ""}`;
 }
@@ -38,7 +38,7 @@ export const carrinhoService = {
         return lerItens().reduce((total, item) => total + item.precoUnitario * item.quantidade, 0);
     },
 
-    // --- ADICIONA UM ITEM E SE JA EXISTIR A MESMA COMBINACAO, SOMA A QUANTIDADE ---
+    // --- ADICIONA UM ITEM E SE JÁ EXISTIR A MESMA COMBINAÇÃO, SOMA A QUANTIDADE ---
     adicionar(item) {
         const itens = lerItens();
         const chave = chaveItem(item);
@@ -53,7 +53,7 @@ export const carrinhoService = {
         return gravarItens(itens);
     },
 
-    // --- DEFINE A QUANTIDADE DE UMA LINHA ---
+    // --- DEFINE A QUANTIDADE DE UMA LINHA DO CARRINHO ---
     atualizarQuantidade(chave, quantidade) {
         let itens = lerItens();
         if (quantidade < 1) {
@@ -64,7 +64,7 @@ export const carrinhoService = {
         return gravarItens(itens);
     },
 
-    // --- REMOVE UMA LINHA ESPECIFICA DO CARRINHO ---
+    // --- REMOVE UMA LINHA ESPECÍFICA DO CARRINHO ---
     remover(chave) {
         const itens = lerItens().filter((i) => chaveItem(i) !== chave);
         return gravarItens(itens);
@@ -75,7 +75,7 @@ export const carrinhoService = {
         return gravarItens([]);
     },
 
-    // --- EXPOE O GERADOR DE CHAVE PARA AS TELAS ---
+    // --- EXPÕE O GERADOR DE CHAVE PARA AS TELAS ---
     chaveDe(item) {
         return chaveItem(item);
     }

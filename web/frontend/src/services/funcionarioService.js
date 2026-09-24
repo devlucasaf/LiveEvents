@@ -2,11 +2,12 @@ import { apiRequest } from "./api";
 
 // --- SERVICO DE FUNCIONARIOS DO PDV ---
 export const funcionarioService = {
+    // --- LISTA TODOS OS FUNCIONÁRIOS ---
     listar() {
         return apiRequest("/admin/funcionarios");
     },
 
-    // --- CADASTRAR NOVO FUNCIONARIO ---
+    // --- CADASTRAR NOVO FUNCIONÁRIO ---
     criar(payload) {
         return apiRequest("/admin/funcionarios", {
             method: "POST",
@@ -14,7 +15,7 @@ export const funcionarioService = {
         });
     },
 
-    // --- EDITAR FUNCIONARIO ---
+    // --- EDITAR FUNCIONÁRIO ---
     atualizar(id, payload) {
         return apiRequest(`/admin/funcionarios/${id}`, {
             method: "PUT",
@@ -22,7 +23,7 @@ export const funcionarioService = {
         });
     },
 
-    // --- ATIVAR/DESATIVAR FUNCIONARIO ---
+    // --- ATIVAR/DESATIVAR FUNCIONÁRIO ---
     alterarStatus(id, ativo) {
         return apiRequest(`/admin/funcionarios/${id}/status`, {
             method: "PATCH",

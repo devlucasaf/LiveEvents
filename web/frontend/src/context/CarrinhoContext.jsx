@@ -12,6 +12,7 @@ export function CarrinhoProvider({ children }) {
         function sincronizar() {
             setItens(carrinhoService.listar());
         }
+        
         window.addEventListener("carrinho:atualizado", sincronizar);
         window.addEventListener("storage", sincronizar);
         return () => {

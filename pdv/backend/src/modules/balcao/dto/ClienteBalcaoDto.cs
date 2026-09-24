@@ -18,14 +18,14 @@ public class ClienteBalcaoDto
     public string   Cpf             { get; set; } = string.Empty;
     
     [Required(ErrorMessage = "O telefone do cliente é obrigatório.")]
-    public string   Telefone        { get; set; } = string.Empty;
-    public DateTime? DataNascimento { get; set; }
-    public string?  Cep             { get; set; }
-    public string?  Logradouro      { get; set; }
-    public string?  Numero          { get; set; }
-    public string?  Complemento     { get; set; }
-    public string?  Bairro          { get; set; }
-    public string?  Cidade          { get; set; }
-    public string?  Estado          { get; set; }
-    public Dictionary<string, string?>? Documentos { get; set; }
+    public string                       Telefone            { get; set; } = string.Empty;
+    public DateTime?                    DataNascimento      { get; set; }
+    public string?                      Cep                 { get; set; }
+    public string?                      Logradouro          { get; set; }
+    public string?                      Numero              { get; set; }
+    public string?                      Complemento         { get; set; }
+    public string?                      Bairro              { get; set; }
+    public string?                      Cidade              { get; set; }
+    public string?                      Estado              { get; set; }
+    public Dictionary<string, string?>? Documentos          { get; set; }
 }
